@@ -37,7 +37,9 @@ public class particleFollower : MonoBehaviour
                 if (GoPos.transform.position != CurrentPos)
                     GoPos.GetComponent<particleFollower>().particleArray[i].position = GoPos.transform.position;
                 else
-                    GoPos.GetComponent<particleFollower>().particleArray[i].position = Vector3.MoveTowards(GoPos.GetComponent<particleFollower>().particleArray[i].position,this.transform.position, speed * Time.deltaTime);
+                {
+                    GoPos.GetComponent<particleFollower>().particleArray[i].position = Vector3.MoveTowards(GoPos.GetComponent<particleFollower>().particleArray[i].position, this.transform.position, speed * Time.deltaTime);
+                }
             }
 
             if (GoPos.transform.position != CurrentPos)
@@ -45,11 +47,36 @@ public class particleFollower : MonoBehaviour
 
             GoPos.GetComponent<particleFollower>().ps.SetParticles(GoPos.GetComponent<particleFollower>().particleArray, numAliveParticle);
 
-            if(!this.GoPos.CompareTag("SandDown")&&!this.GoPos.GetComponent<DragAndDrop>().ishaSand)
+            if (!this.GoPos.CompareTag("SandDown") && !this.GoPos.GetComponent<DragAndDrop>().ishaSand)
             {
                 this.gameObject.GetComponent<DragAndDrop>().ishaSand = false;
                 this.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
+        //if (GoPos)
+        //{
+        //    numAliveParticle = GetComponent<particleFollower>().ps.GetParticles(GetComponent<particleFollower>().particleArray);
+
+        //    for (int i = 0; i < numAliveParticle; i++)
+        //    {
+        //        if (transform.position != CurrentPos)
+        //            GetComponent<particleFollower>().particleArray[i].position = transform.position;
+        //        else
+        //        {
+        //            GetComponent<particleFollower>().particleArray[i].position = Vector3.MoveTowards(GetComponent<particleFollower>().particleArray[i].position, GoPos.transform.position, speed * Time.deltaTime);
+        //        }
+        //    }
+
+        //    if (transform.position != CurrentPos)
+        //        CurrentPos = transform.position;
+
+        //    GetComponent<particleFollower>().ps.SetParticles(GetComponent<particleFollower>().particleArray, numAliveParticle);
+
+        //    if (!this.CompareTag("SandDown") && !this.GetComponent<DragAndDrop>().ishaSand)
+        //    {
+        //        this.gameObject.GetComponent<DragAndDrop>().ishaSand = false;
+        //        this.transform.GetChild(0).gameObject.SetActive(false);
+        //    }
+        //}
     }
 }

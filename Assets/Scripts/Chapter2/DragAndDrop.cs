@@ -17,8 +17,10 @@ public class DragAndDrop : MonoBehaviour
     public LineRenderer LineObj;
     public bool ishaSand;
 
+    public bool isLinkBlock;
     //TODO!!!
 
+    public AudioSource UISound;
 
     private void Start()
     {
@@ -36,6 +38,7 @@ public class DragAndDrop : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        UISound.Play();
         defaultPos = this.transform.position;
         if (!this.name.Contains("Clone") && UI.nCount > 0 && !GM.isInsert) //클릭한게 클론아닐때
         {
@@ -69,8 +72,13 @@ public class DragAndDrop : MonoBehaviour
         {
             traceObj.GetComponent<NodeScript>().isNodepull = true;  ///
             traceObj.GetComponent<NodeScript>().inNodeName = gameObject.name;
+            if(traceObj.GetComponent<NodeScript>().isLinkNode)
+            {
+                isLinkBlock = true;
+            }
             this.traceObj.GetComponent<NodeScript>().inNode = base.gameObject;
             this.transform.position = traceObj.position;
+            tutotialScript.isNodeIn = true;
         }
         else
         {
@@ -82,11 +90,14 @@ public class DragAndDrop : MonoBehaviour
     }
     public void SetTraceObjfalse()
     {
-        Debug.Log("SA");
+
         if (this.traceObj != null)
         {
             this.ishaSand = false;
+            isLinkBlock = false;
             base.transform.GetChild(0).gameObject.SetActive(false);
+            if (base.gameObject.GetComponent<particleFollower>().GetComponent<DragAndDrop>().traceObj != null)
+                base.gameObject.GetComponent<particleFollower>().GetComponent<DragAndDrop>().traceObj.GetComponent<NodeScript>().isgoal = false;
             if (this.LinkOBJ != null)
             {
                 this.LinkOBJ.transform.GetChild(0).gameObject.SetActive(false);
@@ -100,8 +111,10 @@ public class DragAndDrop : MonoBehaviour
             }
             if (base.gameObject.GetComponent<particleFollower>().GoPos != null)
             {
-                if (base.gameObject.GetComponent<particleFollower>().GoPos.GetComponent<DragAndDrop>()!=null)
-                 base.gameObject.GetComponent<particleFollower>().GoPos.GetComponent<DragAndDrop>().LinkOBJ = null;
+                if (base.gameObject.GetComponent<particleFollower>().GoPos.GetComponent<DragAndDrop>() != null)
+                {
+                    base.gameObject.GetComponent<particleFollower>().GoPos.GetComponent<DragAndDrop>().LinkOBJ = null;
+                }
             }
             else if (base.GetComponent<DragAndDrop>().LinkOBJ == base.gameObject)
             {

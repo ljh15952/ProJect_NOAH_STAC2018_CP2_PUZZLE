@@ -51,7 +51,7 @@ public class GameMng : MonoBehaviour
 
                         DragAndDrop dragObj = currentChoiceNode.GetComponent<DragAndDrop>();
 
-
+                        
                         ClickObjName = dragObj.name;
 
 

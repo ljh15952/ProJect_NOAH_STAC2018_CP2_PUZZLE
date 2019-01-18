@@ -9,6 +9,8 @@ public class LineRenderScript : MonoBehaviour
 
     public bool bClick;
 
+    public AudioSource EFX;
+    public AudioSource LittleEFX;
     public bool isLineOut;
     public bool isDirectionOut; // Right Left
 
@@ -52,31 +54,62 @@ public class LineRenderScript : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
+
             if (hit)
             {
-                if (hit.transform.CompareTag("SandDown"))
+                if (! GM.RealDragObject.isLinkBlock)
                 {
-                    lineRenderer.SetColors(Color.green, Color.green);
-                }
-                if (GM.ClickObjName == "Sun(Clone)") //해
-                {
-                    if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)"))
+                    if (hit.transform.CompareTag("SandDown"))
+                    {
                         lineRenderer.SetColors(Color.green, Color.green);
+                    }
+                    if (GM.ClickObjName == "Sun(Clone)") //해
+                    {
+                        if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)"))
+                            lineRenderer.SetColors(Color.green, Color.green);
+                    }
+                    else if (GM.ClickObjName == "Moon(Clone)") // 달
+                    {
+                        if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)"))
+                            lineRenderer.SetColors(Color.green, Color.green);
+                    }
+                    else if (GM.ClickObjName == "Star(Clone)") //별
+                    {
+                        if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)"))
+                            lineRenderer.SetColors(Color.green, Color.green);
+                    }
+                    else if (GM.ClickObjName == "Earth(Clone)") // 지구
+                    {
+                        if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)"))
+                            lineRenderer.SetColors(Color.green, Color.green);
+                    }
                 }
-                else if (GM.ClickObjName == "Moon(Clone)") // 달
+                else
                 {
-                    if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)"))
+                    if (hit.transform.CompareTag("SandDown"))
+                    {
                         lineRenderer.SetColors(Color.green, Color.green);
-                }
-                else if (GM.ClickObjName == "Star(Clone)") //별
-                {
-                    if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)"))
-                        lineRenderer.SetColors(Color.green, Color.green);
-                }
-                else if (GM.ClickObjName == "Earth(Clone)") // 지구
-                {
-                    if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)"))
-                        lineRenderer.SetColors(Color.green, Color.green);
+                    }
+                    if (GM.ClickObjName == "Sun(Clone)") //해
+                    {
+                        if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)"))
+                            lineRenderer.SetColors(Color.green, Color.green);
+                    }
+                    else if (GM.ClickObjName == "Moon(Clone)") // 달
+                    {
+                        if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)"))
+                            lineRenderer.SetColors(Color.green, Color.green);
+                    }
+                    else if (GM.ClickObjName == "Star(Clone)") //별
+                    {
+                        if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)"))
+                            lineRenderer.SetColors(Color.green, Color.green);
+                    }
+                    else if (GM.ClickObjName == "Earth(Clone)") // 지구
+                    {
+                        if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)"))
+                            lineRenderer.SetColors(Color.green, Color.green);
+                    }
                 }
             }
             else
@@ -129,26 +162,7 @@ public class LineRenderScript : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonUp(0) && GM.isInsert && count == 0) //클릭하고 있을때
-        {
-            //
-            bClick = true;
-            count++;
-
-
-            pfm.Test1(GM.RealDragObject.transform);
-
-            firstClickPos = GM.RealDragObject.traceObj.position;
-            firstClickPos.z = 0;
-
-
-            lineRenderer.SetPosition(0, firstClickPos);
-            lineRenderer.SetPosition(1, new Vector3(this.firstClickPos.x, this.firstClickPos.y + 0.5f, 0));
-            GM.RealDragObject.traceObj.GetComponent<NodeScript>().NodeLine = lineRenderer;
-            //
-
-        }
-
+       
         if (Input.GetMouseButtonUp(0) && GM.isInsert && count == 1)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -162,38 +176,116 @@ public class LineRenderScript : MonoBehaviour
 
             if (hit)
             {
-                if (hit.transform.CompareTag("SandDown"))
+                LittleEFX.Play();
+              
+                if (!GM.RealDragObject.isLinkBlock)
                 {
-                    GM.RealDragObject.GetComponent<DragAndDrop>().ishaSand = true;
-                    GetMouseDownSuccessEvent(hit);
-                }
-                if (ObjectNum == 1) //해
-                {
-                    if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                    if (hit.transform.CompareTag("SandDown"))
+                    {
+                        GM.RealDragObject.GetComponent<DragAndDrop>().ishaSand = true;
                         GetMouseDownSuccessEvent(hit);
+                    }
+                    if (ObjectNum == 1) //해
+                    {
+                        if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                            GetMouseDownSuccessEvent(hit);
+                    }
+                    else if (ObjectNum == 2) // 달
+                    {
+                        if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                            GetMouseDownSuccessEvent(hit);
+                    }
+                    else if (ObjectNum == 3) //별
+                    {
+                        if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                            GetMouseDownSuccessEvent(hit);
+                    }
+                    else if (ObjectNum == 4) // 지구
+                    {
+                        if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                            GetMouseDownSuccessEvent(hit);
+                    }
+                    else if (!hit)
+                    {
+                        Debug.Log("SDADASDSDSD");
+                    }
                 }
-                else if (ObjectNum == 2) // 달
+                else
                 {
-                    if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                    if (hit.transform.CompareTag("SandDown"))
+                    {
+                        GM.RealDragObject.GetComponent<DragAndDrop>().ishaSand = true;
                         GetMouseDownSuccessEvent(hit);
-                }
-                else if (ObjectNum == 3) //별
-                {
-                    if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                    }
+                    if (ObjectNum == 1) //해
+                    {
+                        if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                        {
+                            GetMouseDownSuccessEvent(hit);
+                        }
+                    }
+                    else if (ObjectNum == 2) // 달
+                    {
+                        if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                        {
+
+
+                            GetMouseDownSuccessEvent(hit);
+                        }
+                    }
+                    else if (ObjectNum == 3) //별
+                    {
+                        if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                        {
+
+
+                            GetMouseDownSuccessEvent(hit);
+                        }
+                    }
+                    else if (ObjectNum == 4) // 지구
+                    {
+                        if ((hit.transform.name == "Moon(Clone)" || hit.transform.name == "Star(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
+                        {
+                            Debug.Log("HI4");
+
+                            GetMouseDownSuccessEvent(hit);
+                        }
+                    }
+                    else if (!hit)
+                    {
+                        Debug.Log("SDADASDSDSD");
+                    }
+                    if(hit.transform.gameObject == GM.RealDragObject.gameObject)
+                    {
+
                         GetMouseDownSuccessEvent(hit);
+                    }
                 }
-                else if (ObjectNum == 4) // 지구
-                {
-                    if ((hit.transform.name == "Sun(Clone)" || hit.transform.name == "Earth(Clone)") && hit.transform.GetComponent<DragAndDrop>().LinkOBJ == null)
-                        GetMouseDownSuccessEvent(hit);
-                }
-                else if (!hit)
-                {
-                    Debug.Log("SDADASDSDSD");
-                }
+                if (GM.RealDragObject.GetComponent<DragAndDrop>().traceObj.GetComponent<ads>() != null)
+                    GM.RealDragObject.GetComponent<DragAndDrop>().traceObj.GetComponent<ads>().SetLastNode();
             }
 
         }
+        if (Input.GetMouseButtonUp(0) && GM.isInsert && count == 0) //클릭하고 있을때
+        {
+            //
+            bClick = true;
+            count++;
+
+            pfm.Test1(GM.RealDragObject.transform);
+
+            firstClickPos = GM.RealDragObject.traceObj.position;
+            firstClickPos.z = 0;
+
+            EFX.Play();
+
+            lineRenderer.SetPosition(0, firstClickPos);
+            lineRenderer.SetPosition(1, new Vector3(this.firstClickPos.x, this.firstClickPos.y + 0.5f, 0));
+            GM.RealDragObject.traceObj.GetComponent<NodeScript>().NodeLine = lineRenderer;
+            //
+
+        }
+
     }
 
     void isAble2DrawLine()
@@ -209,7 +301,11 @@ public class LineRenderScript : MonoBehaviour
             dragPos = Vector3.zero;
 
             lineRenderer.SetPosition(1, hit.transform.position);
+            lineRenderer.SetColors(Color.white, Color.white);
+
             count = 0;
+
+            tutotialScript.isSandConnected = true;
 
             if (!hit.transform.CompareTag("SandDown") && hit.transform.GetComponent<DragAndDrop>().ishaSand)
             {
@@ -218,7 +314,7 @@ public class LineRenderScript : MonoBehaviour
 
             if (this.GM.RealDragObject.GetComponent<DragAndDrop>().ishaSand)
             {
-                this.GM.RealDragObject.transform.GetChild(0).gameObject.SetActive(true);
+                GM.RealDragObject.transform.GetChild(0).gameObject.SetActive(true);
             }
             if (this.GM.RealDragObject.GetComponent<DragAndDrop>().traceObj.CompareTag("goal"))
             {
@@ -239,6 +335,13 @@ public class LineRenderScript : MonoBehaviour
             GM.isInsert = false;
         }
     }
+
+
+    //IEnumerator StartParticle()
+    //{
+    //    DragAndDrop PaticleObj = GM.RealDragObject;
+    //    yield return new WaitForSeconds(1.5f);
+    //}
 
     public void SetLine()
     {

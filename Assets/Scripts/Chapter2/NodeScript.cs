@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NodeScript : MonoBehaviour {
 
+    
 
     public bool isNodepull;
 
@@ -12,6 +13,7 @@ public class NodeScript : MonoBehaviour {
 
     public GameObject inNode;
     public bool isgoal;
+    public bool isLinkNode;
 
     public void isEnd()
     {
@@ -27,8 +29,8 @@ public class NodeScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(NodeLine)
-        {
-        }
+        if (!isgoal)
+            return;
+
 	}
 }

@@ -1,4 +1,4 @@
-Android
+WindowsStandalone
 SceneListBegin?
 Assets/_Scene/Junghwa/a2.unity
 SceneListEnd?
@@ -115,6 +115,7 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ButtonScript
 db65f1438c3bba58e4621ac433e232a3 Assembly-CSharp.dll:.NodeScript
 f97d72a1814198b8ee15e257a113561f Assembly-CSharp.dll:.DragAndDrop
 48b9f9473266b78682e1b3f7a0729e76 Assembly-CSharp.dll:.NodesArray
@@ -151,4 +152,3 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 4119556c0cbc3c974e1790b07ddb46fc Assembly-CSharp.dll:.stageManager
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.LayoutSort
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ButtonScript

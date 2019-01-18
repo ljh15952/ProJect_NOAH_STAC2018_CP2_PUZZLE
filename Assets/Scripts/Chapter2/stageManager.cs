@@ -12,6 +12,7 @@ public class stageManager : MonoBehaviour {
     public GameObject Stage2;
     public GameObject Stage3;
 
+    public GameObject tututu;
 
     public Text SunText;
     public Text MoonText;
@@ -27,6 +28,7 @@ public class stageManager : MonoBehaviour {
         {
             case 1:
                 Stage1.SetActive(true);
+              //  tututu.SetActive(true);
                 SunText.GetComponent<UIManager>().nCount = 2;
                 MoonText.GetComponent<UIManager>().nCount = 2;
                 StarText.GetComponent<UIManager>().nCount = 2;

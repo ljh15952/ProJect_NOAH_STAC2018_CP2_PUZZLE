@@ -6,5 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Scene/Junghwa/a 2.unity
-    guid: 69b4de2fbd9502d4d96874020d0f8a6f
+    path: Assets/_Scene/Junghwa/a3.unity
+    guid: a473168ae329886489f354d846aba791
+  m_configObjects: {}

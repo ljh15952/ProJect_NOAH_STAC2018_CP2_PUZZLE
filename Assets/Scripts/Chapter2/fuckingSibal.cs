@@ -16,7 +16,7 @@ public class fuckingSibal : MonoBehaviour {
     private void OnMouseDrag()
     {
         
-        FUCK.transform.eulerAngles = new Vector3(0,0, curangle2 + (GetAngle()-curangle));
+        FUCK.transform.eulerAngles = new Vector3(0,0, (curangle2 + (GetAngle()-curangle)*2));
         
        
     }
